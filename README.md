@@ -41,6 +41,9 @@ The project includes several key visualizations for analysis:
 4. **PCA Loadings Heatmap** (`pca_loadings_heatmap.png`)
    - Illustrates the contributions of original features to the principal components.
 
+5. **ROC Curve** (`roc_curve.png`)
+   - Evaluates model performance by plotting the True Positive Rate (TPR) vs. False Positive Rate (FPR).
+
 ---
 
 ## 🚀 Running the Project

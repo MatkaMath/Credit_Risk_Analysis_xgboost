@@ -40,3 +40,5 @@ def evaluate_model(model, X_test_pca, y_test):
     with open("results/classification_report.txt", "w") as f:
         f.write(f"ROC-AUC Score: {roc_auc:.4f}\n\n")
         f.write(report)
+
+    return y_test, y_proba

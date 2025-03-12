@@ -2,8 +2,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 import pandas as pd
+from sklearn.metrics import roc_curve, auc
 
-def generate_plots(X_train, X_train_pca, preprocessor, pca, cat_cols):
+def generate_plots(X_train, X_train_pca, preprocessor, pca, cat_cols, y_true=None, y_scores=None):
     num_cols = X_train.select_dtypes(include=['int64', 'float64']).columns
     
     # Compute correlation matrix for numerical features
@@ -69,3 +70,21 @@ def generate_plots(X_train, X_train_pca, preprocessor, pca, cat_cols):
     plt.xticks(rotation=45, ha="right")
     plt.yticks(rotation=0)
     plt.savefig("results/pca_loadings_heatmap.png")
+    
+    # ROC Curve
+    if y_true is not None and y_scores is not None:
+        fpr, tpr, _ = roc_curve(y_true, y_scores)
+        roc_auc = auc(fpr, tpr)
+        
+        plt.figure(figsize=(8, 6))
+        plt.plot(fpr, tpr, color='blue', lw=2, label=f'ROC curve (area = {roc_auc:.2f})')
+        plt.plot([0, 1], [0, 1], color='gray', linestyle='--')
+        plt.xlim([0.0, 1.0])
+        plt.ylim([0.0, 1.05])
+        plt.xlabel('False Positive Rate')
+        plt.ylabel('True Positive Rate')
+        plt.title('Receiver Operating Characteristic (ROC) Curve')
+        plt.legend(loc='lower right')
+        plt.grid()
+        
+        plt.savefig("results/roc_curve.png")
